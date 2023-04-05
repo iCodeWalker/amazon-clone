@@ -10,8 +10,11 @@ import { auth } from "./firebase";
 import { useStateValue } from "./components/StateProvider";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import Orders from "./components/Orders";
 
-const promise = loadStripe("public key from stripe");
+const promise = loadStripe(
+  "pk_test_51KdVT9SBXYTiPNAADPlG3Ix0WZSZrW5MUhB2hy21uNzRbdR71fPVi73Xikl4QzUrdfFBPklxxBMhU4QmptR6Y4Ig002Izww4SC"
+);
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -41,10 +44,10 @@ function App() {
   }, []);
   return (
     <Router>
-      <div className='app'>
+      <div className="app">
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               <>
                 <Header /> <Home />
@@ -52,7 +55,7 @@ function App() {
             }
           />
           <Route
-            path='/checkout'
+            path="/checkout"
             element={
               <>
                 <Header />
@@ -62,7 +65,7 @@ function App() {
           />
 
           <Route
-            path='/payment'
+            path="/payment"
             element={
               <>
                 <Header />
@@ -72,7 +75,16 @@ function App() {
               </>
             }
           />
-          <Route path='/login' element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/orders"
+            element={
+              <>
+                <Header />
+                <Orders />
+              </>
+            }
+          />
         </Routes>
       </div>
     </Router>

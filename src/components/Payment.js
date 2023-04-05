@@ -7,9 +7,12 @@ import "./Payment.css";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { getBasketTotal } from "./reducer";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
+import { db } from "../firebase";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
+  let navigate = useNavigate();
 
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState("");
@@ -36,6 +39,8 @@ function Payment() {
     getClientSecret();
   }, [basket]);
 
+  console.log("the client secret is", clientSecret);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
@@ -47,11 +52,25 @@ function Payment() {
         },
       })
       .then(({ paymentIntent }) => {
+        db.collection("users")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
 
-        Navigate("/orders");
+        dispatch({
+          type: "EMPTY_BASKET",
+        });
+
+        navigate("/orders", { replace: true });
       });
   };
 
@@ -109,7 +128,7 @@ function Payment() {
                 <CurrencyFormat
                   renderText={(value) => (
                     <>
-                      <h3>Order Total : {value}</h3>
+                      <h4>Order Total : {value}</h4>
                     </>
                   )}
                   decimalScale={2}
