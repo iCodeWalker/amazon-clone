@@ -5,7 +5,7 @@ import { useStateValue } from "./StateProvider";
 import Order from "./Order";
 
 function Orders() {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function Orders() {
     } else {
       setOrders([]);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="orders">
@@ -33,7 +33,7 @@ function Orders() {
 
       <div className="orders_order">
         {orders?.map((order) => {
-          <Order order={order} />;
+          return <Order order={order} />;
         })}
       </div>
     </div>

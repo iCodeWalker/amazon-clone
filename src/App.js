@@ -17,7 +17,7 @@ const promise = loadStripe(
 );
 
 function App() {
-  const [{}, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
   useEffect(() => {
     //will run only once when app component loads
 
@@ -41,7 +41,7 @@ function App() {
         });
       }
     });
-  }, []);
+  }, [dispatch]);
   return (
     <Router>
       <div className="app">

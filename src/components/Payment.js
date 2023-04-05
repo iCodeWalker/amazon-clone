@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CheckoutProduct from "./CheckoutProduct";
 import CurrencyFormat from "react-currency-format";
 import { useStateValue } from "./StateProvider";
@@ -72,6 +72,8 @@ function Payment() {
 
         navigate("/orders", { replace: true });
       });
+
+    console.log(payload);
   };
 
   const handleChange = (event) => {

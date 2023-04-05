@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Subtotal() {
   const navigate = useNavigate();
   const [basketPrice, setBasketPrice] = useState(0);
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket }] = useStateValue();
 
   useEffect(() => {
     const priceList = basket.map((item) => item.price);
@@ -18,7 +18,7 @@ function Subtotal() {
   }, [basket]);
 
   return (
-    <div className='subtotal'>
+    <div className="subtotal">
       <CurrencyFormat
         renderText={(value) => (
           <>
@@ -26,8 +26,8 @@ function Subtotal() {
               {/* Part of the homework */}
               Subtotal ({basket.length} items): <strong>{basketPrice}</strong>
             </p>
-            <small className='subtotal__gift'>
-              <input type='checkbox' /> This order contains a gift
+            <small className="subtotal__gift">
+              <input type="checkbox" /> This order contains a gift
             </small>
           </>
         )}
